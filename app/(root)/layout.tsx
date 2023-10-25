@@ -22,12 +22,10 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <Menu />
-        <main className="mt-28">
+        <main className="px-2 lg:px-24 py-20 flex ">
           <LeftSideBar />
           <section>
-            <div>
-              {children}
-            </div>
+            <div>{children}</div>
           </section>
           <RightSideBar />
         </main>
