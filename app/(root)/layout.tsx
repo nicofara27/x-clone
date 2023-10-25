@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <Menu />
-        <main>
+        <main className="mt-28">
           <LeftSideBar />
           <section>
             <div>
