@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const LeftSideBar = () => {
   const pathname = usePathname();
   return (
-    <section className="sticky left-0 top-0 z-20 h-[calc(100vh-2rem)] w-[15%] lg:w-[25%] py-8 flex flex-col border-r border-r-dark-4 max-md:hidden">
+    <section className="sticky left-0 top-0 z-20 h-[calc(100vh-2rem)] w-[15%] lg:w-[22.5%] py-8 flex flex-col border-r border-r-dark-4 max-md:hidden">
       <Link href="/">
         <Image
           className="rounded-full mx-auto lg:mx-0"
@@ -44,7 +44,7 @@ const LeftSideBar = () => {
           <p className="max-lg:hidden">Postear</p>
         </Link>
       </div>
-      <button className="flex gap-2 mt-auto mb-2 lg:ps-2 text-start"><Image className="mx-auto" src="/assets/logout.svg" alt="cerrar" width={24} height={24}></Image><span className="max-lg:hidden">Cerrar sesion</span></button>
+      <button className="flex gap-2 mt-auto mb-2 lg:ps-2 text-start"><Image className="mx-auto lg:mx-0" src="/assets/logout.svg" alt="cerrar" width={24} height={24}></Image><span className="max-lg:hidden">Cerrar sesion</span></button>
     </section>
   );
 };
