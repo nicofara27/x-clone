@@ -1,5 +1,6 @@
 "use client";
 import { menuLinks } from "@/constants";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -44,7 +45,23 @@ const LeftSideBar = () => {
           <p className="max-lg:hidden">Postear</p>
         </Link>
       </div>
-      <button className="flex gap-2 mt-auto mb-2 lg:ps-2 text-start"><Image className="mx-auto lg:mx-0" src="/assets/logout.svg" alt="cerrar" width={24} height={24}></Image><span className="max-lg:hidden">Cerrar sesion</span></button>
+      <div className="mt-auto mb-2 lg:ps-4 text-center">
+        <SignedIn>
+          <UserButton
+            showName={true}
+            appearance={{
+              elements: {
+                rootBox: "max-lg:mx-auto",
+                userButtonBox: {
+                  flexDirection: "row-reverse",
+                },
+                userButtonOuterIdentifier:
+                  "max-lg:hidden  text-slate-200 font-bold",
+              },
+            }}
+          />
+        </SignedIn>
+      </div>
     </section>
   );
 };
