@@ -5,6 +5,7 @@ import Menu from "@/components/common/Menu";
 import LeftSideBar from "@/components/common/LeftSideBar";
 import RightSideBar from "@/components/common/RightSideBar";
 import Footer from "@/components/common/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className={inter.className}>
-        <Menu />
-        <main className="px-2 lg:px-24 py-20 md:py-0 flex">
-          <LeftSideBar />
-          <section>
-            <div>{children}</div>
-          </section>
-          <RightSideBar />
-        </main>
-        <Footer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="es">
+        <body className={inter.className}>
+          <Menu />
+          <main className="px-2 lg:px-24 py-20 md:py-0 flex">
+            <LeftSideBar />
+            <section>
+              <div>{children}</div>
+            </section>
+            <RightSideBar />
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
