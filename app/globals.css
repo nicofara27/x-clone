@@ -26,3 +26,8 @@
       rgb(var(--background-start-rgb));
   }
   
+  @layer utilities {
+    .no-focus {
+      @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+    }
+  }
