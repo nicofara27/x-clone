@@ -4,6 +4,7 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CreatePost from "../modals/CreatePost";
 
 const LeftSideBar = () => {
   const pathname = usePathname();
@@ -37,13 +38,7 @@ const LeftSideBar = () => {
             </Link>
           );
         })}
-        <Link
-          href="/"
-          className="flex gap-2 bg-lime-500 rounded-full p-2 hover:bg-lime-600"
-        >
-          <Image src="/assets/add.svg" alt="Logo" width={24} height={24} />
-          <p className="max-lg:hidden">Postear</p>
-        </Link>
+        <CreatePost />
       </div>
       <div className="mt-auto mb-2 lg:ps-4 text-center">
         <SignedIn>
