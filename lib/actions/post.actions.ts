@@ -19,7 +19,6 @@ export async function addPost({ text, author, communityId, path }: Params) {
             author,
             community: null
         })
-
         await User.findByIdAndUpdate(author, {
             $push: { posts: addPost._id }
         })
@@ -28,5 +27,22 @@ export async function addPost({ text, author, communityId, path }: Params) {
     } catch (error: any) {
         throw new Error(`Error al crear el post: ${error}`)
     }
+}
 
+export async function fetchPosts() {
+    connectToDB();
+
+     const response = await Post.find({ parentId: { $in: [null, undefined] } })
+        .sort({ createdAt: "desc" })
+        .populate({ path: "author", model: User })
+        .populate({
+            path: "children",
+            populate: {
+                path: "author",
+                model: User,
+                select: "_id name parentId image"
+            }
+        })
+
+        return response;
 }
