@@ -1,6 +1,6 @@
 const RightSideBar = () => {
     return (
-        <div>
+        <div className="w-[35%]">
             R-Bar
         </div>
     );

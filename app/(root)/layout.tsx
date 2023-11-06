@@ -24,9 +24,9 @@ export default function RootLayout({
       <html lang="es">
         <body className={inter.className}>
           <Menu />
-          <main className="px-2 lg:px-24 py-20 md:py-0 flex">
+          <main className="px-2 lg:px-24 py-20 md:py-0 flex justify-between">
             <LeftSideBar />
-            <section>
+            <section className="w-[50%]">
               <div>{children}</div>
             </section>
             <RightSideBar />
