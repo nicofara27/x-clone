@@ -39,8 +39,16 @@ export async function updateUser({
         revalidatePath(path);
       }
     } catch (error: any) {
-      throw new Error(`Failed to create/update user: ${error.message}`);
+      throw new Error(`Error al crear o editar el usuario: ${error.message}`);
     }
   }
   
-  
+export async function fetchUser(userId: string) {
+  try {
+    connectToDB();
+
+    return await User.findOne({ id: userId });
+  } catch (error) {
+    throw new Error(`Error al traer el usuario: ${error}`);
+  }
+}
