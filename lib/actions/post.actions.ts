@@ -32,7 +32,7 @@ export async function addPost({ text, author, communityId, path }: Params) {
 export async function fetchPosts() {
     connectToDB();
 
-     const response = await Post.find({ parentId: { $in: [null, undefined] } })
+    const response = await Post.find({ parentId: { $in: [null, undefined] } })
         .sort({ createdAt: "desc" })
         .populate({ path: "author", model: User })
         .populate({
@@ -44,5 +44,35 @@ export async function fetchPosts() {
             }
         })
 
+    return response;
+}
+
+export async function fetchPostsById(id: string) {
+    connectToDB();
+    try {
+        const response = await Post.findById(id)
+            .populate({ path: "author", model: User, select: "_id id name img" })
+            .populate({
+                path: "children",
+                populate: [{
+                    path: "author",
+                    model: User,
+                    select: "_id name parentId img"
+                },
+                {
+                    path: "children",
+                    model: Post,
+                    populate: {
+                        path: "author",
+                        model: User,
+                        select: "_id id name parentId img"
+                    }
+                }
+                ]
+            })
+
         return response;
+    } catch (error: any) {
+        throw new Error(`Error al traer el post: ${error}`)
+    }
 }
