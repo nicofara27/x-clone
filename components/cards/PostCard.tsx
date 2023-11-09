@@ -36,9 +36,9 @@ const PostCard = ({
   comments,
   isComment,
 }: Props) => {
+
   return (
-    <article className="flex border-b hover:bg-gray-800 p-4">
-      <div className="w-full flex items-start justify-between">
+    <article className={`flex border-b hover:bg-gray-800 p-4 ${!isComment && "pt-10"}`}>
         <div className="w-full flex flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
             <Link href={`/profile/${author.id}`} className="relative w-11 h-11">
@@ -55,9 +55,9 @@ const PostCard = ({
               href={`/profile/${author.id}`}
               className="w-fit hover:underline font-semibold"
             >
-              <h4 className="">{author.name}</h4>
+              <h4 className="text-lg">{author.name}</h4>
             </Link>
-            <p className="text-sm ">{content}</p>
+            <p>{content}</p>
             <div className="w-3/4 flex justify-between mt-3">
               <Image
                 className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
@@ -91,7 +91,7 @@ const PostCard = ({
               />
             </div>
           </div>  
-        </div>
+
       </div>
     </article>
   );
