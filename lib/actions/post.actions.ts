@@ -76,3 +76,28 @@ export async function fetchPostsById(id: string) {
         throw new Error(`Error al traer el post: ${error}`)
     }
 }
+
+export const addComment = async (postId: string, commentText: string, userId: string, path: string) => {
+    connectToDB();
+    try {
+        const originalPost = await Post.findById(postId);
+        if(!originalPost) {
+            throw new Error("Post no encontrado");
+        }
+
+        const commentPost = await Post.create({
+            text: commentText,
+            author: userId,
+            parentId: postId
+        })
+
+        const savedCommentPost = await commentPost.save();
+        originalPost.children.push(savedCommentPost._id);
+
+        await originalPost.save();
+
+        revalidatePath(path);
+    } catch (error) {
+        throw new Error(`Error al crear el comentario: ${error}`)
+    }
+}
