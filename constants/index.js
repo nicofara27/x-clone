@@ -21,7 +21,14 @@ export const menuLinks = [
     },
     {
         nombre: "Perfil",
-        url: "/:user",
+        url: "/profile",
         logo: "/assets/user.svg"
     },
+]
+
+export const profileTabs = [
+    {value: "posts", label:"Posts"},
+    {value: "respuestas", label:"Respuestas"},
+    {value: "fotos", label:"Fotos y videos"},
+    {value: "meGusta", label:"Me gusta"}
 ]
