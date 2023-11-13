@@ -1,6 +1,6 @@
 "use client";
 import { menuLinks } from "@/constants";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,6 +8,7 @@ import CreatePost from "../modals/CreatePost";
 
 const LeftSideBar = () => {
   const pathname = usePathname();
+  const { userId } = useAuth();
   return (
     <section className="sticky left-0 top-0 z-20 h-[calc(100vh-2rem)] w-[15%] lg:w-[22.5%] py-8 flex flex-col border-r border-r-dark-4 max-md:hidden">
       <Link href="/">
@@ -25,6 +26,8 @@ const LeftSideBar = () => {
             (pathname.includes(link.url) && link.url.length > 1) ||
             pathname === link.url;
 
+          if (link.url === "/profile") link.url = `${link.url}/${userId}`;
+
           return (
             <Link
               href={link.url}
@@ -38,7 +41,7 @@ const LeftSideBar = () => {
             </Link>
           );
         })}
-        <CreatePost />
+        {/* <CreatePost /> */}
       </div>
       <div className="mt-auto mb-2 lg:ps-4 text-center">
         <SignedIn>
