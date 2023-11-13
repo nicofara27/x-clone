@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import User from "../models/user.model"
 import { connectToDB } from "../mongoose"
 import Post from "../models/post.model";
+import { FilterQuery, SortOrder } from "mongoose";
 
 interface Params {
   userId: string;
@@ -74,8 +75,41 @@ export async function fetchUserPosts(userId: string) {
         })
       })
 
-      return posts;
+    return posts;
   } catch (error) {
     throw new Error(`Error al traer los posts del usuario: ${error}`);
+  }
+}
+
+export async function fetchUsers({
+  userId,
+  searchString = "",
+  sortBy = "desc"
+}: {
+  userId: string;
+  searchString?: string;
+  sortBy?: SortOrder
+}) {
+  try {
+    connectToDB();
+
+    const regex = new RegExp(searchString, "i");
+
+    const query: FilterQuery<typeof User> = {
+      id: { $ne: userId },
+    }
+
+    if (searchString.trim() !== "") {
+      query.$or = [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } }
+      ]
+    }
+
+    const users = await User.find(query).sort({ createdAt: sortBy })
+
+    return users;
+  } catch (error: any) {
+    throw new Error(`Error al traer los usuarios: ${error}`);
   }
 }
