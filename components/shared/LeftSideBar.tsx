@@ -47,6 +47,7 @@ const LeftSideBar = () => {
         <SignedIn>
           <UserButton
             showName={true}
+            afterSignOutUrl="/"
             appearance={{
               elements: {
                 rootBox: "max-lg:mx-auto",
