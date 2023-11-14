@@ -6,12 +6,12 @@ export const menuLinks = [
     },
     {
         nombre: "Explorar",
-        url: "/explorar",
+        url: "/explore",
         logo: "/assets/search.svg"
     },
     {
         nombre: "Notificaciones",
-        url: "/notificaciones",
+        url: "/notifications",
         logo: "/assets/bell.svg"
     },
     {
