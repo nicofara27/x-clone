@@ -113,3 +113,30 @@ export async function fetchUsers({
     throw new Error(`Error al traer los usuarios: ${error}`);
   }
 }
+
+export async function getNotifications(userId: string) {
+  try {
+    connectToDB();
+
+    const userPosts = await Post.find({ author: userId });
+
+    const childPostsIds = userPosts.reduce((acc, userPost) => {
+      return acc.concat(userPost.children)
+    },[])
+
+
+    const replies = await Post.find({
+      _id: { $in: childPostsIds },
+      author: { $ne: userId }
+    }).populate({
+      path: "author",
+      model: User,
+      select: "_id name img"
+    })
+
+    return replies;
+
+  } catch (error: any) {
+    throw new Error(`Error al traer las notificaciones: ${error}`);
+  }
+}
