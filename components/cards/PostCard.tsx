@@ -1,21 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import GiveLike from "../buttons/GiveLike";
 
 interface Props {
   id: string;
+  userId: string;
   currentUserId: string;
-  parentId: string | null;
   content: string;
+  parentId: string;
   author: {
     name: string;
     img: string;
     id: string;
   };
-  community: {
-    id: string;
-    name: string;
-    image: string;
-  } | null;
   createdAt: string;
   comments: {
     author: {
@@ -28,14 +25,15 @@ interface Props {
 const PostCard = ({
   id,
   currentUserId,
-  parentId,
+  userId,
   content,
   author,
-  community,
+  parentId,
   createdAt,
   comments,
   isComment,
 }: Props) => {
+
   return (
     <article
       className={`border-b hover:bg-gray-800 p-4 ${!isComment && "pt-8"}`}
@@ -66,13 +64,7 @@ const PostCard = ({
           !isComment && "border-t md:border-0 mt-4"
         }`}
       >
-        <Image
-          className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
-          src="/assets/likes.svg"
-          alt="likes"
-          width={28}
-          height={28}
-        />
+        <GiveLike userId={JSON.stringify(userId)} postId={JSON.stringify(id)} />
         <Image
           className="cursor-pointer rounded-full p-1 hover:bg-emerald-500 duration-200"
           src="/assets/repost.svg"
