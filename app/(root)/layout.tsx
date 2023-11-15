@@ -23,7 +23,7 @@ export default function RootLayout({
       <html lang="es">
         <body className={inter.className}>
           <Menu />
-          <main className="px-2 lg:px-24 py-20 md:py-0 flex justify-between">
+          <main className="px-2 lg:px-32 py-20 md:py-0 flex justify-between">
             <LeftSideBar />
             <section className="w-full md:w-[75%] lg:w-[50%]">
               <div>{children}</div>

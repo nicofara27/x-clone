@@ -33,13 +33,8 @@ const Comment = ({ postId, userImg, currentUserId }: Props) => {
     },
   });
 
-
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-    
-    await addComment(postId,
-      values.post,
-      JSON.parse(currentUserId),
-      pathname)
+    await addComment(postId, values.post, JSON.parse(currentUserId), pathname);
     form.reset();
   };
 
@@ -84,7 +79,7 @@ const Comment = ({ postId, userImg, currentUserId }: Props) => {
           </div>
           <Button
             type="submit"
-            className="w-1/4 me-4 rounded-full font-bold text-lg bg-sky-500 hover:bg-sky-600 "
+            className="w-1/4 me-4 rounded-full font-bold bg-sky-500 hover:bg-sky-600 "
           >
             Responder
           </Button>
