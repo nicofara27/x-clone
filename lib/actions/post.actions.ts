@@ -101,3 +101,18 @@ export const addComment = async (postId: string, commentText: string, userId: st
         throw new Error(`Error al crear el comentario: ${error}`)
     }
 }
+
+export const addLike = async (postId: string, userId: string) => {
+    connectToDB();
+    try {
+        await Post.findByIdAndUpdate(postId, {
+            $addToSet: { likes: userId }
+        })
+        await User.findByIdAndUpdate(userId, {
+            $addToSet: { likes: postId }
+        })
+
+    } catch (error) {
+        throw new Error(`Error al dar like: ${error}`)
+    }   
+}
