@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
     name:{type:String, required:true},
     img: String,
     bio: String,
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
