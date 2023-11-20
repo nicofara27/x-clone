@@ -70,7 +70,6 @@ export async function fetchPostsById(id: string) {
                 }
                 ]
             })
-
         return response;
     } catch (error: any) {
         throw new Error(`Error al traer el post: ${error}`)
@@ -81,7 +80,7 @@ export const addComment = async (postId: string, commentText: string, userId: st
     connectToDB();
     try {
         const originalPost = await Post.findById(postId);
-        if(!originalPost) {
+        if (!originalPost) {
             throw new Error("Post no encontrado");
         }
 
@@ -114,5 +113,21 @@ export const addLike = async (postId: string, userId: string) => {
 
     } catch (error) {
         throw new Error(`Error al dar like: ${error}`)
-    }   
+    }
+}
+
+export const fetchLikes = async (postId: string) => {
+    try {
+        connectToDB();
+        const response = await Post.findById(postId)
+            .select("id likes")
+            .populate({
+                path: "likes",
+                model: User,
+                select: "id name img"
+            })
+        return response;
+    } catch (error) {
+        throw new Error(`Error al traer los likes: ${error}`)
+    }
 }
