@@ -5,15 +5,15 @@ import Image from "next/image";
 const GiveLike = ({
   postId,
   userId,
-  postLikes,
+  postData,
 }: {
   postId: string;
   userId: string;
-  postLikes: any;
+  postData: any;
 }) => {
   const uId = JSON.parse(userId);
   const pId = JSON.parse(postId);
-  const pLikes = JSON.parse(postLikes);
+  const pLikes = JSON.parse(postData);
 
   const giveLike = async (pId: string, uId: string) => {
     await addLike(pId, uId)
