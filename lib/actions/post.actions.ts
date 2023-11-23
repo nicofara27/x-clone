@@ -147,11 +147,11 @@ export const addLike = async (postId: string, userId: string) => {
     }
 }
 
-export const fetchLikes = async (postId: string) => {
+export const fetchPostData = async (postId: string) => {
     try {
         connectToDB();
         const response = await Post.findById(postId)
-            .select("id likes")
+            .select("id likes reposts")
             .populate({
                 path: "likes",
                 model: User,
