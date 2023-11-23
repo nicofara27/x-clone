@@ -24,9 +24,7 @@ async function Page({ params }: { params: { id: string } }) {
         <PostCard
           id={post._id}
           userId={userInfo._id}
-          currentUserId={user.id}
           content={post.text}
-          parentId={post.parentId}
           author={post.author}
           createdAt={post.createdAt}
           comments={post.children}
@@ -51,8 +49,6 @@ async function Page({ params }: { params: { id: string } }) {
             key={comment._id}
             id={comment._id}
             userId={userInfo._id}
-            currentUserId={user.id}
-            parentId={comment.parentId}
             content={comment.text}
             author={comment.author}
             createdAt={comment.createdAt}
