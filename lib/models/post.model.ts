@@ -21,12 +21,21 @@ const postSchema = new mongoose.Schema({
   parentId: {
     type: String,
   },
+  originalPost: {
+    type: String,
+  },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       
     },
+  ],
+  reposts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    }
   ],
   children: [
     {
