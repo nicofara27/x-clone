@@ -25,11 +25,9 @@ export default async function Home() {
               <PostCard
                 key={post._id}
                 id={post._id}
-                currentUserId={user.id}
-                parentId={post.parentId}
+                userId={userInfo._id}
                 content={post.text}
                 author={post.author}
-                community={post.community}
                 createdAt={post.createdAt}
                 comments={post.children}
               />
