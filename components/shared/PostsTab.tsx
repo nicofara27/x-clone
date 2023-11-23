@@ -15,8 +15,7 @@ const PostsTab = async ({ currentUserId, accountId, accountType }: Props) => {
         <PostCard
           key={post._id}
           id={post._id}
-          currentUserId={currentUserId}
-          parentId={post.parentId}
+          userId={currentUserId}
           content={post.text}
           author={
             accountType === "user"
@@ -24,7 +23,6 @@ const PostsTab = async ({ currentUserId, accountId, accountType }: Props) => {
               : {name: post.author.name, img: post.author.image, id: post.author.id,
                 }
           }
-          community={post.community}
           createdAt={post.createdAt}
           comments={post.children}
         />
