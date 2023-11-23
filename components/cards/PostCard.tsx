@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import GiveLike from "../buttons/GiveLike";
-import { fetchLikes } from "@/lib/actions/post.actions";
+import { fetchPostData } from "@/lib/actions/post.actions";
 import Repost from "../buttons/Repost";
 
 interface Props {
@@ -31,7 +31,7 @@ const PostCard = async ({
   comments,
   isComment,
 }: Props) => {
-  const postLikes = await fetchLikes(id);
+  const postData = await fetchPostData(id);
 
   return (
     <article
@@ -66,10 +66,10 @@ const PostCard = async ({
         <GiveLike
           userId={JSON.stringify(userId)}
           postId={JSON.stringify(id)}
-          postLikes={JSON.stringify(postLikes)}
+          postData={JSON.stringify(postData)}
         />
-        <Repost text={content} author={JSON.stringify(userId)} postId={JSON.stringify(id)} />
-        <Link href={`/post/${id}`} className="flex items-center gap-2">
+        <Repost text={content} author={JSON.stringify(userId)} postData={JSON.stringify(postData)} />
+        <Link href={`/post/${id}`} className="flex items-center gap-1">
           <Image
             className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
             src="/assets/comments.svg"
