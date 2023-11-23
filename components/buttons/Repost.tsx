@@ -4,18 +4,19 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const Repost = ({
-  postId,
+  postData,
   text,
   author,
 }: {
-  postId: string;
+  postData: string;
   text: string;
   author: string;
 }) => {
   const pathname = usePathname();
+  const pReposts = JSON.parse(postData);
 
   const repost = async () => {
-    await addRepost(JSON.parse(postId), text, JSON.parse(author), pathname);
+    await addRepost(pReposts._id, text, JSON.parse(author), pathname);
   };
 
   return (
@@ -28,7 +29,7 @@ const Repost = ({
         height={28}
         onClick={repost}
       />
-      <p className="text-xs">{}</p>
+      <p className="text-xs">{pReposts.reposts.length>0 && pReposts.reposts.length}</p>
     </button>
   );
 };
