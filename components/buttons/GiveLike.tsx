@@ -20,7 +20,7 @@ const GiveLike = ({
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <button className="flex items-center gap-1">
       <Image
         className={`cursor-pointer rounded-full p-1 ${
           pLikes.likes.includes(userId) && "bg-pink-500"
@@ -31,8 +31,8 @@ const GiveLike = ({
         height={28}
         onClick={() => giveLike(pId, uId)}
       />
-      <p className="text-xs">{pLikes.likes.length}</p>
-    </div>
+      <p className="text-xs">{pLikes.likes.length>0 && pLikes.likes.length}</p>
+    </button>
   );
 };
 
