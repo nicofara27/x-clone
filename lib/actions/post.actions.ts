@@ -100,6 +100,37 @@ export const addComment = async (postId: string, commentText: string, userId: st
         throw new Error(`Error al crear el comentario: ${error}`)
     }
 }
+export const addRepost = async (postId: string, repostText: string, userId: string, path: string) => {
+    connectToDB();
+    try {
+        const originalPost = await Post.findById(postId);
+        if (!originalPost) {
+            throw new Error("Post no encontrado");
+        }
+
+        const isAlreadyReposted = await Post.find({
+            reposts: { $elemMatch: { $eq: postId } }
+        })
+        if (isAlreadyReposted.length > 0) {
+            throw new Error("El post ya ha sido repostado")
+        }
+
+        const repost = await Post.create({
+            text: repostText,
+            author: userId,
+            originalPost: postId
+        })
+
+        const savedRepost = await repost.save();
+        originalPost.reposts.push(savedRepost._id);
+
+        await originalPost.save();
+
+        revalidatePath(path);
+    } catch (error) {
+        throw new Error(`Error al crear el repost: ${error}`)
+    }
+}
 
 export const addLike = async (postId: string, userId: string) => {
     connectToDB();
