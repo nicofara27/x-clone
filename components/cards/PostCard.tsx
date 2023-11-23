@@ -27,11 +27,11 @@ const PostCard = async ({
   content,
   author,
   createdAt,
+  comments,
   isComment,
 }: Props) => {
-
   const postLikes = await fetchLikes(id);
-  
+
   return (
     <article
       className={`border-b hover:bg-gray-800 p-4 ${!isComment && "pt-8"}`}
@@ -62,27 +62,32 @@ const PostCard = async ({
           !isComment && "border-t md:border-0 mt-4"
         }`}
       >
-        <GiveLike userId={JSON.stringify(userId)} postId={JSON.stringify(id)} postLikes={JSON.stringify(postLikes)} />
+        <GiveLike
+          userId={JSON.stringify(userId)}
+          postId={JSON.stringify(id)}
+          postLikes={JSON.stringify(postLikes)}
+        />
         <Image
           className="cursor-pointer rounded-full p-1 hover:bg-emerald-500 duration-200"
           src="/assets/repost.svg"
-          alt="likes"
+          alt="reposts"
           width={28}
           height={28}
         />
-        <Link href={`/post/${id}`}>
+        <Link href={`/post/${id}`} className="flex items-center gap-2">
           <Image
             className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
             src="/assets/comments.svg"
-            alt="likes"
+            alt="comments"
             width={28}
             height={28}
           />
+          <p className="text-xs">{comments.length > 0 && comments.length}</p>
         </Link>
         <Image
           className="cursor-pointer rounded-full p-1 hover:bg-blue-500 duration-200"
           src="/assets/stats.svg"
-          alt="likes"
+          alt="stats"
           width={28}
           height={28}
         />
