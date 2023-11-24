@@ -122,7 +122,7 @@ export async function getNotifications(userId: string) {
 
     const childPostsIds = userPosts.reduce((acc, userPost) => {
       return acc.concat(userPost.children)
-    },[])
+    }, [])
 
 
     const replies = await Post.find({
@@ -138,5 +138,36 @@ export async function getNotifications(userId: string) {
 
   } catch (error: any) {
     throw new Error(`Error al traer las notificaciones: ${error}`);
+  }
+}
+
+export async function followUser(currentUser: string, targetUser: string, path: string) {
+
+  try {
+    connectToDB();
+    await User.findByIdAndUpdate(currentUser, {
+      $addToSet: { following: targetUser }
+    })
+    await User.findByIdAndUpdate(targetUser, {
+      $addToSet: { followers: currentUser }
+    })
+    revalidatePath(path);
+  } catch (error) {
+    throw new Error(`Error al intentar seguir al usuario: ${error}`)
+  }
+}
+
+export async function unfollowUser(currentUser: string, targetUser: string, path: string) {
+  try {
+    connectToDB();
+    await User.findByIdAndUpdate(currentUser, {
+      $pull: { following: targetUser }
+    })
+    await User.findByIdAndUpdate(targetUser, {
+      $pull: { followers: currentUser }
+    })
+    revalidatePath(path);
+  } catch (error) {
+    throw new Error(`Error al intentar dejar de seguir al usuario: ${error}`)
   }
 }
