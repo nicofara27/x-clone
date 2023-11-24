@@ -22,10 +22,16 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    communities: [
+    followers: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Community"
+            ref: "User"
+        }
+    ],
+    following: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         }
     ]
 
