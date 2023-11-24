@@ -132,7 +132,7 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
     }
 }
 
-export const addLike = async (postId: string, userId: string) => {
+export const addLike = async (postId: string, userId: string, path: string) => {
     connectToDB();
     try {
         await Post.findByIdAndUpdate(postId, {
@@ -141,6 +141,7 @@ export const addLike = async (postId: string, userId: string) => {
         await User.findByIdAndUpdate(userId, {
             $addToSet: { likes: postId }
         })
+        revalidatePath(path)
 
     } catch (error) {
         throw new Error(`Error al dar like: ${error}`)

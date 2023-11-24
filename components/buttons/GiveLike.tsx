@@ -1,6 +1,7 @@
 "use client";
 import { addLike } from "@/lib/actions/post.actions";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const GiveLike = ({
   postId,
@@ -11,12 +12,13 @@ const GiveLike = ({
   userId: string;
   postData: any;
 }) => {
+  const path = usePathname();
   const uId = JSON.parse(userId);
   const pId = JSON.parse(postId);
   const pLikes = JSON.parse(postData);
 
-  const giveLike = async (pId: string, uId: string) => {
-    await addLike(pId, uId)
+  const giveLike = async (pId: string, uId: string, path: string) => {
+    await addLike(pId, uId, path)
   };
 
   return (
@@ -29,7 +31,7 @@ const GiveLike = ({
         alt="likes"
         width={28}
         height={28}
-        onClick={() => giveLike(pId, uId)}
+        onClick={() => giveLike(pId, uId, path)}
       />
       <p className="text-xs">{pLikes.likes.length>0 && pLikes.likes.length}</p>
     </button>
