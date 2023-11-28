@@ -55,7 +55,7 @@ export async function fetchUser(userId: string) {
   }
 }
 
-export async function fetchUserPosts(userId: string) {
+export async function fetchUserPosts(userId: string, category: string) {
 
   try {
     connectToDB();
@@ -63,6 +63,32 @@ export async function fetchUserPosts(userId: string) {
     const posts = await User.findOne({ id: userId })
       .populate({
         path: "posts",
+        model: Post,
+        populate: ({
+          path: "children",
+          model: Post,
+          populate: ({
+            path: "author",
+            model: User,
+            select: "id name img"
+          })
+        })
+      })
+      .populate({
+        path: "reposts",
+        model: Post,
+        populate: ({
+          path: "children",
+          model: Post,
+          populate: ({
+            path: "author",
+            model: User,
+            select: "id name img"
+          })
+        })
+      })
+      .populate({
+        path: "comments",
         model: Post,
         populate: ({
           path: "children",
