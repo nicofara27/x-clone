@@ -3,6 +3,8 @@ import Link from "next/link";
 import GiveLike from "../buttons/GiveLike";
 import { fetchPostData } from "@/lib/actions/post.actions";
 import Repost from "../buttons/Repost";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
 
 interface Props {
   id: string;
@@ -10,10 +12,11 @@ interface Props {
   content: string;
   author: {
     name: string;
+    username: string;
     img: string;
     id: string;
   };
-  createdAt: string;
+  createdAt: number;
   comments: {
     author: {
       image: string;
@@ -33,10 +36,19 @@ const PostCard = async ({
 }: Props) => {
   const postData = await fetchPostData(id);
 
+  console.log(author)
+
+  dayjs.locale("es");
+  let relativeTime = require("dayjs/plugin/relativeTime");
+  dayjs.extend(relativeTime);
+  let timeSince = new Intl.DateTimeFormat("es-Ar").format(createdAt);
+
+  if (Math.floor((new Date() - createdAt) / 1000) <= 86400) {
+    timeSince = (dayjs(createdAt) as any).fromNow();
+  }
+
   return (
-    <article
-      className={`border-b hover:bg-gray-800 p-4 ${!isComment && "pt-8"}`}
-    >
+    <article className="border-b hover:bg-gray-800 p-4">
       <div className="w-full flex flex-row gap-2 md:gap-4">
         <div className="flex flex-col">
           <Link href={`/profile/${author.id}`} className="relative w-10 h-10">
@@ -51,11 +63,14 @@ const PostCard = async ({
         <div className="w-full flex flex-col">
           <Link
             href={`/profile/${author.id}`}
-            className="w-fit hover:underline font-semibold"
+            className="w-fit flex gap-2 text-sm"
           >
-            <h4 className="text-lg">{author.name}</h4>
+            <h4 className="hover:underline font-semibold">{author.name}</h4>
+            <p className="text-gray-500">
+              @{author.username} ‧ {timeSince}
+            </p>
           </Link>
-          <p>{content}</p>
+          <p className="text-sm">{content}</p>
         </div>
       </div>
       <div
