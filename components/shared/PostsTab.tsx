@@ -5,13 +5,25 @@ interface Props {
   currentUserId: string;
   accountId: string;
   accountType: string;
+  tab: string;
 }
-const PostsTab = async ({ currentUserId, accountId, accountType }: Props) => {
-  const result = await fetchUserPosts(accountId);
+const PostsTab = async ({
+  currentUserId,
+  accountId,
+  accountType,
+  tab,
+}: Props) => {
+  const result = await fetchUserPosts(accountId, tab);
+  let posts = result.posts.concat(result.reposts);
 
+  switch (tab) {
+    case "replies": {
+      posts = posts.concat(result.comments);
+    }
+  }
   return (
     <section>
-      {result.posts.map((post: any) => (
+      {posts.map((post: any, index: number) => (
         <PostCard
           key={post._id}
           id={post._id}
@@ -19,8 +31,11 @@ const PostsTab = async ({ currentUserId, accountId, accountType }: Props) => {
           content={post.text}
           author={
             accountType === "user"
-              ? { name: result.name, img: result.img, id: result.id,}
-              : {name: post.author.name, img: post.author.image, id: post.author.id,
+              ? { name: result.name, img: result.img, id: result.id }
+              : {
+                  name: post.author.name,
+                  img: post.author.image,
+                  id: post.author.id,
                 }
           }
           createdAt={post.createdAt}
