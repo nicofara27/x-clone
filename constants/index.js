@@ -28,7 +28,7 @@ export const menuLinks = [
 
 export const profileTabs = [
     {value: "posts", label:"Posts"},
-    {value: "respuestas", label:"Respuestas"},
-    {value: "fotos", label:"Fotos y videos"},
-    {value: "meGusta", label:"Me gusta"}
+    {value: "replies", label:"Respuestas"},
+    {value: "media", label:"Fotos y videos"},
+    {value: "likes", label:"Me gusta"}
 ]
