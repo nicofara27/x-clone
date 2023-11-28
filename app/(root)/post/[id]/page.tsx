@@ -17,7 +17,6 @@ async function Page({ params }: { params: { id: string } }) {
 
   const post = await fetchPostsById(params.id);
 
-
   return (
     <section>
       <div>
@@ -34,7 +33,7 @@ async function Page({ params }: { params: { id: string } }) {
         <h4 className="ms-[84px] text-sm text-gray-500 mt-1">
           Respondiendo a{" "}
           <Link href={`/profile/${post.author.id}`} className="text-sky-500">
-            @{post.author.name}
+            @{post.author.username}
           </Link>
         </h4>
         <Comment
