@@ -31,11 +31,17 @@ const PostsTab = async ({
           content={post.text}
           author={
             accountType === "user"
-              ? { name: result.name, img: result.img, id: result.id }
+              ? {
+                  name: result.name,
+                  img: result.img,
+                  id: result.id,
+                  username: result.username,
+                }
               : {
                   name: post.author.name,
                   img: post.author.image,
                   id: post.author.id,
+                  username: post.author.username,
                 }
           }
           createdAt={post.createdAt}
