@@ -57,7 +57,7 @@ export async function fetchPostsById(id: string) {
                 populate: [{
                     path: "author",
                     model: User,
-                    select: "_id id name parentId img"
+                    select: "_id id name username parentId img"
                 },
                 {
                     path: "children",
@@ -65,7 +65,7 @@ export async function fetchPostsById(id: string) {
                     populate: {
                         path: "author",
                         model: User,
-                        select: "_id id name parentId img"
+                        select: "_id id name username parentId img"
                     }
                 }
                 ]
