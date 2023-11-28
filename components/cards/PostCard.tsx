@@ -68,7 +68,11 @@ const PostCard = async ({
           postId={JSON.stringify(id)}
           postData={JSON.stringify(postData)}
         />
-        <Repost text={content} author={JSON.stringify(userId)} postData={JSON.stringify(postData)} />
+        <Repost
+          text={content}
+          author={JSON.stringify(userId)}
+          postData={JSON.stringify(postData)}
+        />
         <Link href={`/post/${id}`} className="flex items-center gap-1">
           <Image
             className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
