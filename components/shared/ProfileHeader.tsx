@@ -24,11 +24,18 @@ const ProfileHeader = ({
 }: Props) => {
   const path = usePathname();
   const follow = async () => {
-    if(!isFollowing) {
-      await followUser(JSON.parse(currentUserId), JSON.parse(profileUserId), path);
+    if (!isFollowing) {
+      await followUser(
+        JSON.parse(currentUserId),
+        JSON.parse(profileUserId),
+        path
+      );
     } else {
-      console.log("first")
-      await unfollowUser(JSON.parse(currentUserId), JSON.parse(profileUserId), path);
+      await unfollowUser(
+        JSON.parse(currentUserId),
+        JSON.parse(profileUserId),
+        path
+      );
     }
   };
   return (
