@@ -1,18 +1,30 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    id:{type:String, required:true},
-    username:{type:String, required:true, unique:true},
-    name:{type:String, required:true},
+    id: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     img: String,
     bio: String,
+    posts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post"
         }
     ],
-    posts: [
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
+    reposts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post"
