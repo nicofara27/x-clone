@@ -83,6 +83,7 @@ export const addComment = async (postId: string, commentText: string, userId: st
         if (!originalPost) {
             throw new Error("Post no encontrado");
         }
+        const userComment = await User.findById(userId);
 
         const commentPost = await Post.create({
             text: commentText,
@@ -92,8 +93,10 @@ export const addComment = async (postId: string, commentText: string, userId: st
 
         const savedCommentPost = await commentPost.save();
         originalPost.children.push(savedCommentPost._id);
+        userComment.comments.push(savedCommentPost._id);
 
         await originalPost.save();
+        await userComment.save();
 
         revalidatePath(path);
     } catch (error) {
@@ -107,24 +110,22 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
         if (!originalPost) {
             throw new Error("Post no encontrado");
         }
-
-        const isAlreadyReposted = await Post.find({
-            reposts: { $elemMatch: { $eq: postId } }
-        })
-        if (isAlreadyReposted.length > 0) {
-            throw new Error("El post ya ha sido repostado")
+        const userPost = await User.findById(userId);
+        if (!userPost) {
+            throw new Error("Autor del post no encontrado");
         }
 
-        const repost = await Post.create({
-            text: repostText,
-            author: userId,
-            originalPost: postId
-        })
+        if (userPost.reposts.includes(originalPost._id)) {
+            throw new Error("El post ya ha sido repostado")
 
-        const savedRepost = await repost.save();
-        originalPost.reposts.push(savedRepost._id);
+        }
+
+
+        originalPost.reposts.push(postId);
+        userPost.reposts.push(postId);
 
         await originalPost.save();
+        await userPost.save();
 
         revalidatePath(path);
     } catch (error) {
