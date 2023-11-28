@@ -51,7 +51,7 @@ export async function fetchPostsById(id: string) {
     connectToDB();
     try {
         const response = await Post.findById(id)
-            .populate({ path: "author", model: User, select: "_id id name img" })
+            .populate({ path: "author", model: User, select: "_id id name username img" })
             .populate({
                 path: "children",
                 populate: [{
