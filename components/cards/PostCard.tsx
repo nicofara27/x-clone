@@ -36,8 +36,6 @@ const PostCard = async ({
 }: Props) => {
   const postData = await fetchPostData(id);
 
-  console.log(author)
-
   dayjs.locale("es");
   let relativeTime = require("dayjs/plugin/relativeTime");
   dayjs.extend(relativeTime);
