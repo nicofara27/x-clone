@@ -10,12 +10,19 @@ interface Props {
   id: string;
   userId: string;
   content: string;
+  stats: {
+    views: number;
+    interactions: number;
+    inDetail: number;
+  };
   author: {
     name: string;
     username: string;
     img: string;
     id: string;
   };
+  likes: number;
+  reposts: {}[];
   createdAt: number;
   comments: {
     author: {
@@ -30,12 +37,13 @@ const PostCard = async ({
   userId,
   content,
   author,
+  likes,
+  reposts,
+  stats,
   createdAt,
   comments,
   isComment,
 }: Props) => {
-  const postData = await fetchPostData(id);
-
   dayjs.locale("es");
   let relativeTime = require("dayjs/plugin/relativeTime");
   dayjs.extend(relativeTime);
@@ -79,12 +87,13 @@ const PostCard = async ({
         <GiveLike
           userId={JSON.stringify(userId)}
           postId={JSON.stringify(id)}
-          postData={JSON.stringify(postData)}
+          postLikes={JSON.stringify(likes)}
         />
         <Repost
           text={content}
           author={JSON.stringify(userId)}
-          postData={JSON.stringify(postData)}
+          postId={JSON.stringify(id)}
+          reposts={JSON.stringify(reposts)}
         />
         <Link href={`/post/${id}`} className="flex items-center gap-1">
           <Image
@@ -96,13 +105,16 @@ const PostCard = async ({
           />
           <p className="text-xs">{comments.length > 0 && comments.length}</p>
         </Link>
-        <Image
-          className="cursor-pointer rounded-full p-1 hover:bg-blue-500 duration-200"
-          src="/assets/stats.svg"
-          alt="stats"
-          width={28}
-          height={28}
-        />
+        <div className="flex items-center gap-1">
+          <Image
+            className="cursor-pointer rounded-full p-1 hover:bg-blue-500 duration-200"
+            src="/assets/stats.svg"
+            alt="stats"
+            width={28}
+            height={28}
+          />
+          <p className="text-xs">{stats.views}</p>
+        </div>
       </div>
     </article>
   );
