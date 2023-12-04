@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { number } from "zod";
 
 const postSchema = new mongoose.Schema({
   text: {
@@ -18,6 +19,20 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  stats: {
+    views: {
+      type: Number,
+      default: 0
+    },
+    interactions: {
+      type: Number,
+      default: 0
+    },
+    inDetail: {
+      type: Number,
+      default: 0
+    }
+  },
   parentId: {
     type: String,
   },
@@ -28,14 +43,15 @@ const postSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      
+
     },
   ],
   reposts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
+      ref: "Post"
     }
+
   ],
   children: [
     {
