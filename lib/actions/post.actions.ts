@@ -31,7 +31,6 @@ export async function addPost({ text, author, communityId, path }: Params) {
 
 export async function fetchPosts() {
     connectToDB();
-
     const response = await Post.find({ parentId: { $in: [null, undefined] } })
         .sort({ createdAt: "desc" })
         .populate({ path: "author", model: User })
@@ -43,6 +42,12 @@ export async function fetchPosts() {
                 select: "_id name parentId image"
             }
         })
+
+        await Post.updateMany( { parentId: { $in: [null, undefined] } }
+            , {
+                $inc: { "stats.views": 1 }
+            }
+        )
 
     return response;
 }
@@ -70,6 +75,11 @@ export async function fetchPostsById(id: string) {
                 }
                 ]
             })
+
+            await Post.findByIdAndUpdate(id, {  
+                $inc: { "stats.inDetail": 1, "stats.views": 1, "stats.interactions": 1 }
+            });
+
         return response;
     } catch (error: any) {
         throw new Error(`Error al traer el post: ${error}`)
@@ -98,6 +108,10 @@ export const addComment = async (postId: string, commentText: string, userId: st
         await originalPost.save();
         await userComment.save();
 
+        await Post.findByIdAndUpdate(postId, {
+            $inc: { "stats.interactions": 1 }
+        })
+
         revalidatePath(path);
     } catch (error) {
         throw new Error(`Error al crear el comentario: ${error}`)
@@ -120,12 +134,15 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
 
         }
 
-
         originalPost.reposts.push(postId);
         userPost.reposts.push(postId);
 
         await originalPost.save();
         await userPost.save();
+
+        await Post.findByIdAndUpdate(postId, {
+            $inc: { "stats.interactions": 1 }
+        })
 
         revalidatePath(path);
     } catch (error) {
@@ -142,8 +159,12 @@ export const addLike = async (postId: string, userId: string, path: string) => {
         await User.findByIdAndUpdate(userId, {
             $addToSet: { likes: postId }
         })
-        revalidatePath(path)
 
+        await Post.findByIdAndUpdate(postId, {
+            $inc: { "stats.interactions": 1 }
+        })
+
+        revalidatePath(path)
     } catch (error) {
         throw new Error(`Error al dar like: ${error}`)
     }
