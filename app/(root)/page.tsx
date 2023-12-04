@@ -12,6 +12,7 @@ export default async function Home() {
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const result = await fetchPosts();
+
   return (
     <>
       <h1 className="head-text text-left">Home</h1>
@@ -28,6 +29,9 @@ export default async function Home() {
                 userId={userInfo._id}
                 content={post.text}
                 author={post.author}
+                likes={post.likes}
+                reposts={post.reposts}
+                stats={post.stats}
                 createdAt={post.createdAt}
                 comments={post.children}
               />

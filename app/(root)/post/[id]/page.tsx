@@ -8,14 +8,14 @@ import { redirect } from "next/navigation";
 
 async function Page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
-
   const user = await currentUser();
   if (!user) return null;
-
+  
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
-
+  
   const post = await fetchPostsById(params.id);
+
 
   return (
     <section>
@@ -25,6 +25,9 @@ async function Page({ params }: { params: { id: string } }) {
           userId={userInfo._id}
           content={post.text}
           author={post.author}
+          likes={post.likes}
+          reposts={post.reposts}
+          stats={post.stats}
           createdAt={post.createdAt}
           comments={post.children}
         />
@@ -50,6 +53,9 @@ async function Page({ params }: { params: { id: string } }) {
             userId={userInfo._id}
             content={comment.text}
             author={comment.author}
+            likes={comment.likes}
+            reposts={comment.reposts}
+            stats={comment.stats}
             createdAt={comment.createdAt}
             comments={comment.children}
             isComment

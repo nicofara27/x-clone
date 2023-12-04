@@ -16,7 +16,7 @@ const PostsTab = async ({
   const result = await fetchUserPosts(accountId, tab);
   let posts = result.posts.concat(result.reposts);
 
-  switch (tab) {
+    switch (tab) {
     case "replies": {
       posts = posts.concat(result.comments);
     }
@@ -44,6 +44,9 @@ const PostsTab = async ({
                   username: post.author.username,
                 }
           }
+          likes={post.likes}
+          reposts={post.reposts}
+          stats={post.stats}
           createdAt={post.createdAt}
           comments={post.children}
         />
