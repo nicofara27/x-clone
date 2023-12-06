@@ -1,3 +1,4 @@
+import GoBack from "@/components/buttons/GoBack";
 import PostCard from "@/components/cards/PostCard";
 import Comment from "@/components/forms/Comment";
 import { fetchPostsById } from "@/lib/actions/post.actions";
@@ -18,7 +19,8 @@ async function Page({ params }: { params: { id: string } }) {
 
 
   return (
-    <section>
+    <section >
+      <GoBack title="Post"/>
       <div>
         <PostCard
           id={post._id}

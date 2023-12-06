@@ -1,3 +1,4 @@
+import GoBack from "@/components/buttons/GoBack";
 import PostsTab from "@/components/shared/PostsTab";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -17,6 +18,12 @@ async function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
+      <GoBack
+        title={userInfo.name}
+        postsNumber={
+          userProfileInfo.posts.concat(userProfileInfo.reposts).length
+        }
+      />
       <ProfileHeader
         profileUserId={JSON.stringify(userProfileInfo._id)}
         currentUserId={JSON.stringify(userInfo._id)}
