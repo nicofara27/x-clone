@@ -32,3 +32,10 @@ export const profileTabs = [
     {value: "media", label:"Fotos y videos"},
     {value: "likes", label:"Me gusta"}
 ]
+
+export const postStats = [
+    {title: "Impresiones", description: "Cantidad de veces que este post se vio en X-Clone"},
+    {title: "Interacciones", description: "Número total de veces que un usuario interactuó con un post. Esto incluye todos los clics en cualquier parte del post (por ejemplo, hashtags, enlaces, avatar, nombre de usuario y expansión del post), así como los reposts, las respuestas, los nuevos seguidores y los Me gusta."},
+    {title: "Ampliaciones de detalles", description:"Cantidad de veces que se vieron los detalles sobre este post" },
+
+]
