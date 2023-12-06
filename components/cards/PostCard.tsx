@@ -5,6 +5,7 @@ import { fetchPostData } from "@/lib/actions/post.actions";
 import Repost from "../buttons/Repost";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
+import Stats from "../modals/Stats";
 
 interface Props {
   id: string;
@@ -21,7 +22,7 @@ interface Props {
     img: string;
     id: string;
   };
-  likes: number;
+  likes: {}[];
   reposts: {}[];
   createdAt: number;
   comments: {
@@ -52,6 +53,7 @@ const PostCard = async ({
   if (Math.floor((new Date() - createdAt) / 1000) <= 86400) {
     timeSince = (dayjs(createdAt) as any).fromNow();
   }
+
 
   return (
     <article className="border-b hover:bg-gray-800 p-4">
@@ -105,16 +107,7 @@ const PostCard = async ({
           />
           <p className="text-xs">{comments.length > 0 && comments.length}</p>
         </Link>
-        <div className="flex items-center gap-1">
-          <Image
-            className="cursor-pointer rounded-full p-1 hover:bg-blue-500 duration-200"
-            src="/assets/stats.svg"
-            alt="stats"
-            width={28}
-            height={28}
-          />
-          <p className="text-xs">{stats.views}</p>
-        </div>
+        <Stats stats={stats} user={author} text={content} timeSince={timeSince} likes={likes.length} reposts={reposts.length} comments={comments.length}/>
       </div>
     </article>
   );
