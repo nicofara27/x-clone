@@ -43,11 +43,11 @@ export async function fetchPosts() {
             }
         })
 
-        await Post.updateMany( { parentId: { $in: [null, undefined] } }
-            , {
-                $inc: { "stats.views": 1 }
-            }
-        )
+    await Post.updateMany({ parentId: { $in: [null, undefined] } }
+        , {
+            $inc: { "stats.views": 1 }
+        }
+    )
 
     return response;
 }
@@ -76,9 +76,9 @@ export async function fetchPostsById(id: string) {
                 ]
             })
 
-            await Post.findByIdAndUpdate(id, {  
-                $inc: { "stats.inDetail": 1, "stats.views": 1, "stats.interactions": 1 }
-            });
+        await Post.findByIdAndUpdate(id, {
+            $inc: { "stats.inDetail": 1, "stats.views": 1, "stats.interactions": 1 }
+        });
 
         return response;
     } catch (error: any) {
