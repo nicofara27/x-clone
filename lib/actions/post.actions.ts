@@ -134,8 +134,10 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
 
         }
 
+        userPost.reposts.push({
+            repost: originalPost._id,
+        });
         originalPost.reposts.push(postId);
-        userPost.reposts.push(postId);
 
         await originalPost.save();
         await userPost.save();

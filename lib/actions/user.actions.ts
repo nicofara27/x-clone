@@ -76,14 +76,17 @@ export async function fetchUserPosts(userId: string, category: string) {
       })
       .populate({
         path: "reposts",
-        model: Post,
         populate: ({
-          path: "children",
+          path: "repost",
           model: Post,
           populate: ({
-            path: "author",
-            model: User,
-            select: "id name img"
+            path: "children",
+            model: Post,
+            populate: ({
+              path: "author",
+              model: User,
+              select: "id name img"
+            })
           })
         })
       })
