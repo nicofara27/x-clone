@@ -26,8 +26,15 @@ const userSchema = new mongoose.Schema({
     ],
     reposts: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Post"
+            _id: false,
+            repost: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Post"
+            },
+            repostedAt: {
+                type: Date,
+                default: Date.now
+            }
         }
     ],
     onboarded: {
