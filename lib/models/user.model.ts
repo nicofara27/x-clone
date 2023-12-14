@@ -14,8 +14,15 @@ const userSchema = new mongoose.Schema({
     ],
     likes: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Post"
+            _id: false,
+            like: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Post"
+            },
+            likedAt: {
+                type: Date,
+                default: Date.now
+            }
         }
     ],
     comments: [
