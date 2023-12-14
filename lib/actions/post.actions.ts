@@ -137,7 +137,7 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
         userPost.reposts.push({
             repost: originalPost._id,
         });
-        originalPost.reposts.push(postId);
+        originalPost.reposts.push(userId);
 
         await originalPost.save();
         await userPost.save();
@@ -155,16 +155,17 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
 export const addLike = async (postId: string, userId: string, path: string) => {
     connectToDB();
     try {
-        await Post.findByIdAndUpdate(postId, {
-            $addToSet: { likes: userId }
-        })
-        await User.findByIdAndUpdate(userId, {
-            $addToSet: { likes: postId }
-        })
+       const userPost = await User.findById(userId);
+       const originalPost = await Post.findById(postId)
+   
+       userPost.likes.push({
+           like: postId
+       })
+       originalPost.likes.push(userId)
+       originalPost.stats.interactions += 1
 
-        await Post.findByIdAndUpdate(postId, {
-            $inc: { "stats.interactions": 1 }
-        })
+       await originalPost.save();
+       await userPost.save();
 
         revalidatePath(path)
     } catch (error) {
