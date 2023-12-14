@@ -24,7 +24,7 @@ interface Props {
   };
   likes: {}[];
   reposts: {}[];
-  createdAt: number;
+  createdAt: Date;
   comments: {
     author: {
       image: string;
@@ -48,12 +48,10 @@ const PostCard = async ({
   dayjs.locale("es");
   let relativeTime = require("dayjs/plugin/relativeTime");
   dayjs.extend(relativeTime);
-  let timeSince = new Intl.DateTimeFormat("es-Ar").format(createdAt);
-
-  if (Math.floor((new Date() - createdAt) / 1000) <= 86400) {
-    timeSince = (dayjs(createdAt) as any).fromNow();
+  let time: Date = new Date();
+  if (Math.floor((time.getDate() - createdAt.getDate()) / 1000) <= 86400) {
+    time = (dayjs(createdAt) as any).fromNow();
   }
-
 
   return (
     <article className="border-b hover:bg-gray-800 p-4">
@@ -75,7 +73,7 @@ const PostCard = async ({
           >
             <h4 className="hover:underline font-semibold">{author.name}</h4>
             <p className="text-gray-500">
-              @{author.username} ‧ {timeSince}
+              @{author.username} ‧ {time.toString()}
             </p>
           </Link>
           <p className="text-sm">{content}</p>
@@ -107,7 +105,15 @@ const PostCard = async ({
           />
           <p className="text-xs">{comments.length > 0 && comments.length}</p>
         </Link>
-        <Stats stats={stats} user={author} text={content} timeSince={timeSince} likes={likes.length} reposts={reposts.length} comments={comments.length}/>
+        <Stats
+          stats={stats}
+          user={author}
+          text={content}
+          timeSince={time.toString()}
+          likes={likes.length}
+          reposts={reposts.length}
+          comments={comments.length}
+        />
       </div>
     </article>
   );
