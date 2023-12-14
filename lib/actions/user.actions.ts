@@ -149,21 +149,43 @@ export async function getNotifications(userId: string) {
 
     const userPosts = await Post.find({ author: userId });
 
-    const childPostsIds = userPosts.reduce((acc, userPost) => {
+    const repliesIds = userPosts.reduce((acc, userPost) => {
       return acc.concat(userPost.children)
     }, [])
-
+    const repostsIds = userPosts.reduce((acc, userPost) => {
+      return acc.concat(userPost.reposts)
+    }, [])
+    const likesIds = userPosts.reduce((acc, userPost) => {
+      return acc.concat(userPost.likes)
+    }, [])
 
     const replies = await Post.find({
-      _id: { $in: childPostsIds },
+      _id: { $in: repliesIds },
       author: { $ne: userId }
-    }).populate({
-      path: "author",
-      model: User,
-      select: "_id name img"
     })
+      .select("_id author parentId createdAt")
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id name img id"
+      })
 
-    return replies;
+    const likes = await User.find({
+      _id: { $in: likesIds, $ne: userId },
+    })
+      .where("likes.like")
+      .in(userPosts.map((userPost) => userPost._id))
+      .select("name img likes id")
+
+    const reposts = await User.find({
+      _id: { $in: repostsIds, $ne: userId },
+
+    })
+      .where("reposts.repost")
+      .in(userPosts.map((userPost) => userPost._id))
+      .select("name img reposts id")
+
+    return { replies, likes, reposts };
 
   } catch (error: any) {
     throw new Error(`Error al traer las notificaciones: ${error}`);
