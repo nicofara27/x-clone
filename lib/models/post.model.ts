@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { number } from "zod";
 
 const postSchema = new mongoose.Schema({
   text: {
@@ -11,9 +10,8 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  community: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Community",
+  media: {
+    type: String,
   },
   createdAt: {
     type: Date,
