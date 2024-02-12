@@ -10,11 +10,10 @@ async function Page() {
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
-  
   return (
     <>
       <h1 className='head-text'>Create Thread</h1>
-      <Post  userId={userInfo._id} userImg={userInfo.img}/>
+      <Post  userId={JSON.stringify(userInfo._id)} userImg={userInfo.img}/>
     </>
   );
 }
