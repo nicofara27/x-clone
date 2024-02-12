@@ -7,17 +7,17 @@ import { connectToDB } from "../mongoose"
 interface Params {
     text: string,
     author: string,
-    communityId: string | null,
+    media?: string,
     path: string
 }
-export async function addPost({ text, author, communityId, path }: Params) {
+export async function addPost({ text, author, media, path }: Params) {
     try {
         connectToDB();
 
         const addPost = await Post.create({
             text,
             author,
-            community: null
+            media
         })
         await User.findByIdAndUpdate(author, {
             $push: { posts: addPost._id }
@@ -155,17 +155,17 @@ export const addRepost = async (postId: string, repostText: string, userId: stri
 export const addLike = async (postId: string, userId: string, path: string) => {
     connectToDB();
     try {
-       const userPost = await User.findById(userId);
-       const originalPost = await Post.findById(postId)
-   
-       userPost.likes.push({
-           like: postId
-       })
-       originalPost.likes.push(userId)
-       originalPost.stats.interactions += 1
+        const userPost = await User.findById(userId);
+        const originalPost = await Post.findById(postId)
 
-       await originalPost.save();
-       await userPost.save();
+        userPost.likes.push({
+            like: postId
+        })
+        originalPost.likes.push(userId)
+        originalPost.stats.interactions += 1
+
+        await originalPost.save();
+        await userPost.save();
 
         revalidatePath(path)
     } catch (error) {
