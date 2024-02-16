@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import GiveLike from "../buttons/GiveLike";
-import { fetchPostData } from "@/lib/actions/post.actions";
 import Repost from "../buttons/Repost";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
@@ -96,7 +95,7 @@ const PostCard = async ({
           reposts={JSON.stringify(reposts)}
         />
         <Link href={`/post/${id}`} className="flex items-center gap-1">
-          <Image
+           <Image
             className="cursor-pointer rounded-full p-1 hover:bg-sky-500 duration-200"
             src="/assets/comments.svg"
             alt="comments"
@@ -107,7 +106,7 @@ const PostCard = async ({
         </Link>
         <Stats
           stats={stats}
-          user={author}
+          user={author} 
           text={content}
           timeSince={time.toString()}
           likes={likes.length}
