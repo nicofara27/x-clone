@@ -20,6 +20,7 @@ import { useState, ChangeEvent } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 import MediaInput from "../inputs/ImgInput";
 import { isBase64Img } from "@/lib/utils";
+import EmojiPicker from "../pickers/EmojiPicker";
 
 const Post = ({ userId, userImg }: { userId: string; userImg: string }) => {
   const [pImg, setPImg] = useState<string>("");
@@ -135,6 +136,7 @@ const Post = ({ userId, userImg }: { userId: string; userImg: string }) => {
           <div className="flex justify-between mx-4 pt-2 border-t border-gray-700">
             <div className="flex items-center gap-2">
               <MediaInput form={form} handleMedia={handleMedia} />
+              <EmojiPicker />
             </div>
             <Button
               type="submit"
