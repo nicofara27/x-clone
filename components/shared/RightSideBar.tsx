@@ -10,8 +10,8 @@ const RightSideBar = async() => {
         <h2 className="text-xl font-bold p-4">Qué está pasando</h2>
         <div>
           {
-            trendingHashtags?.map((hashtag) => (
-            <article className=" p-4 hover:bg-gray-600 hover:cursor-pointer">
+            trendingHashtags?.map((hashtag, i) => (
+            <article key={i} className=" p-4 hover:bg-gray-600 hover:cursor-pointer">
                 <p className="text-xs text-gray-400 ">Tendecia</p>
                 <h4 className="font-semibold leading-4 mb-1">{Object.entries(hashtag)[0][0]}</h4>
                 <p className="text-xs text-gray-400">{Object.entries(hashtag)[0][1]} posts</p>
