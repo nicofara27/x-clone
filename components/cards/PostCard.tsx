@@ -53,7 +53,7 @@ const PostCard = async ({
   }
 
   return (
-    <article className="border-b hover:bg-gray-800 p-4">
+    <article className="border-b border-gray-700 hover:bg-gray-800 p-4">
       <div className="w-full flex flex-row gap-2 md:gap-4">
         <div className="flex flex-col">
           <Link href={`/profile/${author.id}`} className="relative w-10 h-10">

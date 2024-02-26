@@ -5,7 +5,7 @@ const RightSideBar = async() => {
 
   const trendingHashtags= await fetchTrendingHashtags();
   return (
-    <aside className="hidden md:block sticky right-0 top-0 w-[10%] lg:w-[35%] border-l py-4 pl-8">
+    <aside className="hidden md:block sticky right-0 top-0 w-[10%] lg:w-[35%] border-l border-gray-700 py-4 pl-8">
       <section className="bg-gray-800 rounded-lg ">
         <h2 className="text-xl font-bold p-4">Qué está pasando</h2>
         <div>

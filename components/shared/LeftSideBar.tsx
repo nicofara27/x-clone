@@ -10,7 +10,7 @@ const LeftSideBar = () => {
   const pathname = usePathname();
   const { userId } = useAuth();
   return (
-    <section className="sticky left-0 top-0 z-20 h-[calc(100vh-2rem)] w-[15%] lg:w-[22.5%] py-4 flex flex-col border-r border-r-dark-4 max-md:hidden">
+    <section className="sticky left-0 top-0 z-20 h-[calc(100vh-2rem)] w-[15%] lg:w-[22.5%] py-4 flex flex-col border-r border-gray-700 max-md:hidden">
       <Link href="/">
         <Image
           className="rounded-full mx-auto lg:mx-0"

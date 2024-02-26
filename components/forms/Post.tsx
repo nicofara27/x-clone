@@ -85,7 +85,7 @@ const Post = ({ userId, userImg }: { userId: string; userImg: string }) => {
   return (
     <Form {...form}>
       <form
-        className="flex justify-start gap-1 py-2 px-4  border-b"
+        className="flex justify-start gap-1 py-2 px-4  border-b-2 border-gray-700"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div>
@@ -132,7 +132,7 @@ const Post = ({ userId, userImg }: { userId: string; userImg: string }) => {
               </FormItem>
             )}
           />
-          <div className="flex justify-between mx-4 mt-2">
+          <div className="flex justify-between mx-4 pt-2 border-t border-gray-700">
             <div className="flex items-center gap-2">
               <MediaInput form={form} handleMedia={handleMedia} />
             </div>
