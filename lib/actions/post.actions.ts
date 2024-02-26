@@ -11,12 +11,14 @@ interface Params {
     path: string
 }
 export async function addPost({ text, author, media, path }: Params) {
+    const regex = /\B#([^\W]\w*)\b/g;
+    const hashtags = Array.from(text.matchAll(regex), m => m[1]);
     try {
         connectToDB();
-
         const addPost = await Post.create({
             text,
             author,
+            hashtags: hashtags?.length > 0 ? hashtags : [],
             media
         })
         await User.findByIdAndUpdate(author, {
@@ -187,4 +189,43 @@ export const fetchPostData = async (postId: string) => {
     } catch (error) {
         throw new Error(`Error al traer los likes: ${error}`)
     }
+}
+
+export const fetchTrendingHashtags = async () => {
+    try {
+        connectToDB();
+        const trendingHashtags = await (await Post.find({ hashtags: { $ne: [] } })
+            .select("hashtags -_id"))
+
+        const hashtagList: { hashtags: string[] } = trendingHashtags.reduce((result, obj) => {
+            for (const key in obj) {
+                if (Array.isArray(obj[key])) {
+                    result[key] = (result[key] || []).concat(obj[key]);
+                }
+            }
+            return result;
+        }, {});
+
+        const hashtagCount: { [key: string]: number }[] = hashtagList.hashtags.reduce((arr: { [key: string]: number }[], item) => {
+            const existingItem = arr.find(obj => obj[item]);
+            if (existingItem) {
+                existingItem[item]++;
+            } else {
+                const newItem: { [key: string]: number } = {};
+                newItem[item] = 1;
+                arr.push(newItem);
+            }
+
+            return arr;
+        }, []).sort((a, b) => {
+            const countA = Object.values(a)[0];
+            const countB = Object.values(b)[0];
+            return countB - countA;
+        }).splice(0, 4);
+
+        return hashtagCount;
+    } catch (error) {
+        console.log(error)
+    }
+
 }
